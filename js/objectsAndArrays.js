@@ -1,5 +1,4 @@
-var greetButton = document.getElementById("goButton"),
-    displayText = document.getElementById("displayText"),
+var displayText = document.getElementById("displayText"),
     personToGreet = "",
     customers = [],
     newCustomerFirstName = document.getElementById("new-customer-first-name"),
@@ -53,10 +52,6 @@ var greetCustomers = function greetCustomers(){
         });
     }
 }
-
-greetButton.addEventListener("click", function(){
-    greetCustomers();
-});
 
 addCustomerButton.addEventListener("click", function(){
     var newCustomerFName = newCustomerFirstName.value,
