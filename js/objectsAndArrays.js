@@ -1,6 +1,7 @@
 var greetButton = document.getElementById("goButton"),
     displayText = document.getElementById("displayText"),
-    personToGreet = "";
+    personToGreet = "",
+    customers = [];
 
 var Customer = function Customer(firstName, lastName){
     this.firstName = firstName;
@@ -16,15 +17,19 @@ var Customer = function Customer(firstName, lastName){
     }
 };
 
-var customer1 = new Customer("Jeff", "Ammons"),
-    customer2 = new Customer("Sue", "Smith");
+customers.push(new Customer("Jeff", "Ammons"));
+customers.push(new Customer("Sue", "Smith"));
+customers.push({ petType: "Rabbit", age: "23", firstName:"Fluffy", lastName: "Bunny", greetFormally: function(){ return "Little bunny foo foo"; }});
 
-    customer1.email = "jeffa00@gmail.com";
 
 greetButton.addEventListener("click", function(){
 
-    var peopleToGreet = customer1.firstName + " " + customer1.lastName + " " + customer1.greetFormally() + "<br>";
-    peopleToGreet += customer2.firstName + " " + customer2.lastName + " " + customer2.greetFormally() +  "<br>";
+    var peopleToGreet = "";
+    
+    for(var i=0; i< customers.length; i++){
+        var curCustomer = customers[i];
+        peopleToGreet += curCustomer.firstName + " " + curCustomer.lastName + " " + curCustomer.greetFormally() +  "<br>";
+    }
 
     displayText.innerHTML = peopleToGreet;
 });
