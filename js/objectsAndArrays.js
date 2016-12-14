@@ -7,7 +7,8 @@ var greetButton = document.getElementById("goButton"),
     addCustomerButton = document.getElementById("add-new-customer");
     
 
-var Customer = function Customer(firstName, lastName){
+var Customer = function Customer(id, firstName, lastName){
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = "";
@@ -21,18 +22,36 @@ var Customer = function Customer(firstName, lastName){
     }
 };
 
-customers.push(new Customer("Jeff", "Ammons"));
-customers.push(new Customer("Sue", "Smith"));
-
 var greetCustomers = function greetCustomers(){
     var peopleToGreet = "";
     
     for(var i=0; i< customers.length; i++){
         var curCustomer = customers[i];
-        peopleToGreet += curCustomer.firstName + " " + curCustomer.lastName + " " + curCustomer.greetFormally() +  "<br>";
+        peopleToGreet += "ID: " + curCustomer.id + " " + curCustomer.firstName + " " + curCustomer.lastName + " " + curCustomer.greetFormally() +  '<button id="' + i + '" class="delete-btn">Delete</button><br>';
     }
 
     displayText.innerHTML = peopleToGreet;
+    newCustomerFirstName.value = "";
+    newCustomerLastName.value = "";
+
+    // Note: This is an easy way to do this with the bits we've learned so far.
+    //       There is a better way! I'll do that next.
+    var customerButtons = document.getElementsByClassName("delete-btn");
+
+    for(var i=0; i < customerButtons.length; i++){
+        var curButton = customerButtons[i];
+
+        curButton.addEventListener("click", function(){
+            var id = curButton.id;
+
+            var pos = customers.findIndex(function(element){
+                return element.id == id;
+            });
+
+            customers.splice(pos,1);
+            greetCustomers();
+        });
+    }
 }
 
 greetButton.addEventListener("click", function(){
@@ -41,9 +60,15 @@ greetButton.addEventListener("click", function(){
 
 addCustomerButton.addEventListener("click", function(){
     var newCustomerFName = newCustomerFirstName.value,
-        newCustomerLName = newCustomerLastName.value;
+        newCustomerLName = newCustomerLastName.value,
+        id = customers.length;
 
-        customers.push(new Customer(newCustomerFName, newCustomerLName));
+        customers.push(new Customer(id, newCustomerFName, newCustomerLName));
 
     greetCustomers();
 });
+
+
+
+
+
