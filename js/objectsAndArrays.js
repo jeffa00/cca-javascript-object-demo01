@@ -2,11 +2,15 @@ var greetButton = document.getElementById("goButton"),
     displayText = document.getElementById("displayText"),
     personToGreet = "";
 
-    //var customerName = "Jeff";
-
-    var customerFirstName = "Jeff",
-        customerLastName = "Ammons";
+var customer1FirstName = "Jeff",
+    customer1LastName = "Ammons",
+    customer2FirstName = "Sue",
+    customer2LastName = "Smith";
 
 greetButton.addEventListener("click", function(){
-    displayText.innerHTML = customerFirstName + " " + customerLastName;
+
+    var peopleToGreet = customer1FirstName + " " + customer1LastName + "<br>";
+    peopleToGreet += customer2FirstName + " " + customer2LastName + "<br>";
+
+    displayText.innerHTML = peopleToGreet;
 });
