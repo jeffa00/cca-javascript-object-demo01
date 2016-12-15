@@ -3,11 +3,12 @@ var displayText = document.getElementById("displayText"),
     customers = [],
     newCustomerFirstName = document.getElementById("new-customer-first-name"),
     newCustomerLastName = document.getElementById("new-customer-last-name"),
-    addCustomerButton = document.getElementById("add-new-customer");
+    addCustomerButton = document.getElementById("add-new-customer"),
+    maxId = 0;
     
 
-var Customer = function Customer(id, firstName, lastName){
-    this.id = id;
+var Customer = function Customer(firstName, lastName){
+    this.id = maxId++;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = "";
@@ -26,7 +27,7 @@ var greetCustomers = function greetCustomers(){
     
     for(var i=0; i< customers.length; i++){
         var curCustomer = customers[i];
-        peopleToGreet += "ID: " + curCustomer.id + " " + curCustomer.firstName + " " + curCustomer.lastName + " " + curCustomer.greetFormally() +  '<button id="' + i + '" class="delete-btn">Delete</button><br>';
+        peopleToGreet += "ID: " + curCustomer.id + " " + curCustomer.firstName + " " + curCustomer.lastName + " " + curCustomer.greetFormally() +  '<button id="' + curCustomer.id + '" class="delete-btn">Delete</button><br>';
     }
 
     displayText.innerHTML = peopleToGreet;
@@ -40,8 +41,8 @@ var greetCustomers = function greetCustomers(){
     for(var i=0; i < customerButtons.length; i++){
         var curButton = customerButtons[i];
 
-        curButton.addEventListener("click", function(){
-            var id = curButton.id;
+        curButton.addEventListener("click", function(e){
+            var id = e.currentTarget.id;
 
             var pos = customers.findIndex(function(element){
                 return element.id == id;
@@ -55,10 +56,9 @@ var greetCustomers = function greetCustomers(){
 
 addCustomerButton.addEventListener("click", function(){
     var newCustomerFName = newCustomerFirstName.value,
-        newCustomerLName = newCustomerLastName.value,
-        id = customers.length;
+        newCustomerLName = newCustomerLastName.value;
 
-        customers.push(new Customer(id, newCustomerFName, newCustomerLName));
+        customers.push(new Customer(newCustomerFName, newCustomerLName));
 
     greetCustomers();
 });
